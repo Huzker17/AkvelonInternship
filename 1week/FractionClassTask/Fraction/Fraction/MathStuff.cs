@@ -1,9 +1,8 @@
-﻿using Fraction.Interfaces;
-
+﻿
 
 namespace Fraction
 {
-    internal class MathStuff : IMathStuff
+    public class MathStuff 
     {
         // Use Euclid's algorithm to calculate the
         // greatest common divisor (GCD) of two numbers.
