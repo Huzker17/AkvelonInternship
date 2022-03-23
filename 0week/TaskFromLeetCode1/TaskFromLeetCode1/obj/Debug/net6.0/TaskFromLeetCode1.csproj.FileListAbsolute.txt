@@ -1,0 +1,15 @@
+D:\Akvelon\0week\TaskFromLeetCode1\TaskFromLeetCode1\bin\Debug\net6.0\TaskFromLeetCode1.exe
+D:\Akvelon\0week\TaskFromLeetCode1\TaskFromLeetCode1\bin\Debug\net6.0\TaskFromLeetCode1.deps.json
+D:\Akvelon\0week\TaskFromLeetCode1\TaskFromLeetCode1\bin\Debug\net6.0\TaskFromLeetCode1.runtimeconfig.json
+D:\Akvelon\0week\TaskFromLeetCode1\TaskFromLeetCode1\bin\Debug\net6.0\TaskFromLeetCode1.dll
+D:\Akvelon\0week\TaskFromLeetCode1\TaskFromLeetCode1\bin\Debug\net6.0\TaskFromLeetCode1.pdb
+D:\Akvelon\0week\TaskFromLeetCode1\TaskFromLeetCode1\obj\Debug\net6.0\TaskFromLeetCode1.csproj.AssemblyReference.cache
+D:\Akvelon\0week\TaskFromLeetCode1\TaskFromLeetCode1\obj\Debug\net6.0\TaskFromLeetCode1.GeneratedMSBuildEditorConfig.editorconfig
+D:\Akvelon\0week\TaskFromLeetCode1\TaskFromLeetCode1\obj\Debug\net6.0\TaskFromLeetCode1.AssemblyInfoInputs.cache
+D:\Akvelon\0week\TaskFromLeetCode1\TaskFromLeetCode1\obj\Debug\net6.0\TaskFromLeetCode1.AssemblyInfo.cs
+D:\Akvelon\0week\TaskFromLeetCode1\TaskFromLeetCode1\obj\Debug\net6.0\TaskFromLeetCode1.csproj.CoreCompileInputs.cache
+D:\Akvelon\0week\TaskFromLeetCode1\TaskFromLeetCode1\obj\Debug\net6.0\TaskFromLeetCode1.dll
+D:\Akvelon\0week\TaskFromLeetCode1\TaskFromLeetCode1\obj\Debug\net6.0\refint\TaskFromLeetCode1.dll
+D:\Akvelon\0week\TaskFromLeetCode1\TaskFromLeetCode1\obj\Debug\net6.0\TaskFromLeetCode1.pdb
+D:\Akvelon\0week\TaskFromLeetCode1\TaskFromLeetCode1\obj\Debug\net6.0\TaskFromLeetCode1.genruntimeconfig.cache
+D:\Akvelon\0week\TaskFromLeetCode1\TaskFromLeetCode1\obj\Debug\net6.0\ref\TaskFromLeetCode1.dll
