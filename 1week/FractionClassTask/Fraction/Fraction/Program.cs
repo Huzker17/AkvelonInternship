@@ -5,10 +5,6 @@ Console.Write("Input the Denominator: ");
 var DenominatorFromUser = Console.ReadLine();
 Console.Write("\nInput the Numerator: ");
 var Numerator = Console.ReadLine();
-if(int.TryParse(DenominatorFromUser, out int Denominator))
-{
-    
-}
 FractionItem first = new FractionItem(1, 2);
 FractionItem second = new FractionItem(1, 3);
 var firstHash = first.GetHashCode();
