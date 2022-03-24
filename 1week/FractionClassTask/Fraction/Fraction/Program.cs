@@ -1,4 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
+// Task's Link https://github.com/Rust1k/Internship-.NET-/blob/main/week%201/Fraction.md
 using Fraction;
 
 Console.Write("Input the Denominator: ");
