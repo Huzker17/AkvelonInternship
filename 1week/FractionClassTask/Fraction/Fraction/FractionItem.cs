@@ -19,6 +19,10 @@ namespace Fraction
 
         public FractionItem(int numer, int denom)
         {
+            if (numer.GetType() != typeof(int) && denom.GetType() != typeof(int))
+                throw new ArgumentException("Both of parameters should be type of Int");
+            if (denom == 0)
+                throw new ArgumentException("Denominator can't zero");
             Numerator = numer;
             Denominator = denom;
             Simplify(Numerator, Denominator);
@@ -36,7 +40,7 @@ namespace Fraction
                                 result1.Denominator * result2.Denominator);
         }
         //Summary
-        // Mrthod for substraction Return -a.
+        // Method For negative digits.
         //Summary
         public static FractionItem operator -(FractionItem a)
         {
@@ -100,6 +104,14 @@ namespace Fraction
         public override string ToString()
         {
             return Numerator.ToString() + "/" + Denominator.ToString();
+        }
+        public override int GetHashCode()
+        {
+            int hash = 17;
+            // Suitable nullity checks etc, of course :)
+            hash = hash * 23 + Denominator.GetHashCode();
+            hash = hash * 23 + Numerator.GetHashCode();
+            return hash;
         }
     }
 }
