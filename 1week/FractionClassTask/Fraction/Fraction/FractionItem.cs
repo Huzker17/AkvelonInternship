@@ -3,20 +3,17 @@ namespace Fraction
 {
     public class FractionItem
     {
-        //Summary
-        //Immutable field for Numerator
-        //Summary
+        ///Summary
+        ///Immutable field for Numerator
+        ///Summary
         public int Numerator { get; init; }
-        //Summary
-        //Immutable field for Denominator
-        //Summary
+        ///Summary
+        ///Immutable field for Denominator
+        ///Summary
         public int Denominator { get; init; }
-        //Summary
-        // Initialize the fraction from a string A/B.
-        //Summary
-
-
-
+        ///Summary
+        /// Initialize the fraction from a string A/B.
+        ///Summary
         public FractionItem(int numer, int denom)
         {
             if (numer.GetType() != typeof(int) && denom.GetType() != typeof(int))
@@ -27,9 +24,10 @@ namespace Fraction
             Denominator = denom;
             Simplify(Numerator, Denominator);
         }
-        //Summary
-        //Multiply method Return a * b.
-        //Summary
+
+        ///Summary
+        ///Multiply method Return a * b.
+        ///Summary
         public static FractionItem operator *(FractionItem a, FractionItem b)
         {
             // Swap numerators and denominators to simplify.
@@ -39,16 +37,18 @@ namespace Fraction
             return new FractionItem(result1.Numerator * result2.Numerator,
                                 result1.Denominator * result2.Denominator);
         }
-        //Summary
-        // Method For negative digits.
-        //Summary
+
+        ///Summary
+        /// Method For negative digits.
+        ///Summary
         public static FractionItem operator -(FractionItem a)
         {
             return new FractionItem(-a.Numerator, a.Denominator);
         }
-        //Summary
-        // Method for Add Return a + b.
-        //Summary
+
+        ///Summary
+        /// Method for Add Return a + b.
+        ///Summary
         public static FractionItem operator +(FractionItem a, FractionItem b)
         {
             // Get the denominators' greatest common divisor.
@@ -59,23 +59,26 @@ namespace Fraction
             int denom = a.Denominator * (b.Denominator / gcd_ab);
             return new FractionItem(numer, denom);
         }
-        //Summary
-        //Method for Substraction Return a - b.
-        //Summary
+
+        ///Summary
+        ///Method for Substraction Return a - b.
+        ///Summary
         public static FractionItem operator -(FractionItem a, FractionItem b)
         {
             return a + -b;
         }
-        //Summary
-        // Method for dividing Return a / b.
-        //Summary
+
+        ///Summary
+        /// Method for dividing Return a / b.
+        ///Summary
         public static FractionItem operator /(FractionItem a, FractionItem b)
         {
             return a * new FractionItem(b.Denominator, b.Numerator);
         }
-        //Summary
-        // Simplify the fraction.
-        //Summary
+
+        ///Summary
+        /// Simplify the fraction.
+        ///Summary
         private void Simplify( int Numerator, int Denominator)
         {
             // Simplify the sign.
@@ -91,21 +94,26 @@ namespace Fraction
             Denominator = Denominator / gcd_ab;
         }
 
-        //Summary
-        // Convert a to a double.
-        //Summary
+        ///Summary
+        /// Convert a to a double.
+        ///Summary
         public static implicit operator double(FractionItem a)
         {
             return (double)a.Numerator / a.Denominator;
         }
-        //Summary
-        // Return the fraction's value as a string.
-        //Summary
+
+        ///Summary
+        /// Return the fraction's value as a string.
+        ///Summary
         public override string ToString()
         {
             return Numerator.ToString() + "/" + Denominator.ToString();
         }
-        public override bool Equals(System.Object obj)
+
+        ///Summary
+        /// Overrided Equals method.
+        ///Summary
+        public override bool Equals(Object? obj)
         {
             var FractionItem = obj as FractionItem;
 
@@ -116,6 +124,10 @@ namespace Fraction
 
             return (this.Denominator == FractionItem.Denominator && this.Numerator == FractionItem.Numerator);
         }
+        /// <summary>
+        /// Overrided GetHashCode
+        /// </summary>
+        /// <returns>The int type HashCode depended on fields of Class</returns>
         public override int GetHashCode()
         {
             int hash = 17;
