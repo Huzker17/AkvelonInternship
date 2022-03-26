@@ -113,10 +113,16 @@ namespace Fraction
             hash = hash * 23 + Numerator.GetHashCode();
             return hash;
         }
-        public override bool Equals(Object? Com)
+        public override bool Equals(Object? Fraction)
         {
-            this.Equals(Com);
-            return true;
+            var FractionItem = Fraction as FractionItem;
+
+            if (FractionItem == null)
+            {
+                return false;
+            }
+
+            return Equals(FractionItem);
         }
     }
 }
