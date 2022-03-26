@@ -113,5 +113,10 @@ namespace Fraction
             hash = hash * 23 + Numerator.GetHashCode();
             return hash;
         }
+        public override bool Equals(Object? Com)
+        {
+            this.Equals(Com);
+            return true;
+        }
     }
 }
