@@ -105,6 +105,17 @@ namespace Fraction
         {
             return Numerator.ToString() + "/" + Denominator.ToString();
         }
+        public override bool Equals(System.Object obj)
+        {
+            var FractionItem = obj as FractionItem;
+
+            if (FractionItem == null)
+            {
+                return false;
+            }
+
+            return (this.Denominator == FractionItem.Denominator && this.Numerator == FractionItem.Numerator);
+        }
         public override int GetHashCode()
         {
             int hash = 17;
@@ -112,17 +123,6 @@ namespace Fraction
             hash = hash * 23 + Denominator.GetHashCode();
             hash = hash * 23 + Numerator.GetHashCode();
             return hash;
-        }
-        public override bool Equals(Object? Fraction)
-        {
-            var FractionItem = Fraction as FractionItem;
-
-            if (FractionItem == null)
-            {
-                return false;
-            }
-
-            return Equals(FractionItem);
         }
     }
 }
