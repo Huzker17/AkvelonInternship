@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace TrainingCenter.Interfaces
 {
-    public interface IStudent
+    public interface IStudentAndLessons
     {
-
     }
 }

@@ -9,13 +9,14 @@ namespace TrainingCenter.Models
 {
     public class Student : IStudent
     {
-        public IEnumerable<ILesson>? Lessons { get; set; }
-        public int Mark { get; set; }
+        public int Id { get; set; }
         public decimal AverageMark { get; set; }
-
         public int GetMark(ILesson lesson)
         {
             return lesson.GetMark(5);
         }
+        public ICollection<IStudentAndLessons>? StudentAndLessons { get; set; }
+        public ICollection<IStudentAndCourses>? StudentAndCourses { get; set; }
+        public ICollection<IStudentAndTeacher>? StudentAndTeachers { get; set; }
     }
 }
