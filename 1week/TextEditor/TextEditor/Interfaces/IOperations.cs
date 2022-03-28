@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace TextEditor.Interfaces
 {
-    public interface ITextService
+    public interface IOperations
     {
-        public List<List<string>> CreationOfText(string UserText);
+        public void Undo();
+        public void Redo();
     }
 }

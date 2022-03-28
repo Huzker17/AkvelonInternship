@@ -6,14 +6,12 @@ using System.Threading.Tasks;
 
 namespace CustomizedQueuee
 {
-    public class CustomQueue : IQueueCustom<object>
+    public class CustomQueue<T> : IQueueCustom<T>
     {
-        public LinkedList<object> Queue { get; set; } = new LinkedList<object>();
+        public LinkedList<T> Queue { get; set; } = new LinkedList<T>();
 
 
-
-
-        public object Dequeue()
+        public T Dequeue()
         {
             if (Queue == null)
                 throw new InvalidOperationException();
@@ -27,7 +25,7 @@ namespace CustomizedQueuee
         }
 
 
-        public void Enqueue(object item)
+        public void Enqueue(T item)
         {
             if (item == null)
                 throw new ArgumentNullException("item");
