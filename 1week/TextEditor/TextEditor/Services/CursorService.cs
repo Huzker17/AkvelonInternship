@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TrainingCenter.Interfaces
+namespace TextEditor.Services
 {
-    public interface IStudentAndLessons
+    public class CursorService
     {
-        public int Mark { get; set; }
+        public void СursorMoveTo(int Row, int Col)
+        {
+
+        }
     }
 }

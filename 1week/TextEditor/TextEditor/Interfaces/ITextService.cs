@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TrainingCenter.Interfaces
+namespace TextEditor.Interfaces
 {
-    public interface IStudentAndLessons
+    public interface ITextService
     {
-        public int Mark { get; set; }
+        public List<List<string>> CreationOfText(string UserText);
     }
 }
