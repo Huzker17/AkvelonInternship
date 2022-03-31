@@ -24,10 +24,13 @@ namespace TrainingCenter.Tests
         {
             //arrange
             var student = new Student();
-
+            Action testCode = () => student.TakeLesson(null);
             //act
+            var ex = Record.Exception(testCode);
 
             //assert
+            Assert.NotNull(ex);
+            Assert.IsType<ArgumentNullException>(ex);
         }
     }
 }

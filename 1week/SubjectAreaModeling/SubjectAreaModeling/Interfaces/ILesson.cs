@@ -9,6 +9,5 @@ namespace TrainingCenter.Interfaces
 {
     public interface ILesson
     {
-        public void Create(Course course);
     }
 }

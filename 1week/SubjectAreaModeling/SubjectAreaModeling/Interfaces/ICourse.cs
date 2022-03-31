@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TrainingCenter.Models;
 
 namespace TrainingCenter.Interfaces
 {
@@ -14,7 +15,7 @@ namespace TrainingCenter.Interfaces
         /// <param name="TeacherId">Only one teacher can handle one course</param>
         /// <param name="Name">The name of the course</param>
         public void Create(int TeacherId, string Name);
-        public void PutAFinalMark(ICollection<IStudentAndLessons> marks, IStudent student);
+        public void PutAFinalMark(ICollection<StudentAndLesson> marks, IStudent student);
 
 
     }

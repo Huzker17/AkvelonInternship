@@ -15,14 +15,5 @@ namespace TrainingCenter.Models
         public IDictionary<ILesson, IStudent> Students { get; set; }
         public ICollection<IStudentAndLessons>? Marks { get; set; }
 
-        public void Create(Course course)
-        {
-            if(course == null)
-                throw new ArgumentNullException(nameof(course));
-            this.Course = course;
-            this.CourseId = course.Id;
-            this.Teacher = course.Teacher;
-            this.TeacherId = course.TeacherId;
-        }
     }
 }

@@ -10,7 +10,7 @@ namespace TrainingCenter.Models
         public ITeacher? Teacher { get; set; }
         public ICollection<ILesson>? Lessons { get; set; }
         public IDictionary<ICourse, IStudent>? Students { get; set; }
-        public IDictionary<IStudent, double> FinalMarks { get; set; }
+        public IDictionary<IStudent, double> FinalMarks { get; set; } = new Dictionary<IStudent, double>();
 
         public void Create(int TeacherId, string Name)
         {
@@ -20,7 +20,7 @@ namespace TrainingCenter.Models
             course1.TeacherId = TeacherId;
             course1.Name = Name;
         }
-        private double CountFinalMark(ICollection<IStudentAndLessons> marks)
+        private double CountFinalMark(ICollection<StudentAndLesson> marks)
         {
 
             double count = 0;
@@ -31,8 +31,10 @@ namespace TrainingCenter.Models
             count = count / marks.Count();
             return count;
         }
-        public void PutAFinalMark(ICollection<IStudentAndLessons> marks, IStudent student)
+        public void PutAFinalMark(ICollection<StudentAndLesson> marks , IStudent student)
         {
+            if(marks == null || student == null)
+                throw new ArgumentNullException("One of the paramaters is null");
             double AverageMark = this.CountFinalMark(marks);
             this.FinalMarks.Add(student, AverageMark);
         }
