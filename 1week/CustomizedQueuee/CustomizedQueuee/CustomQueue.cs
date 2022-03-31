@@ -8,7 +8,7 @@ namespace CustomizedQueuee
 {
     public class CustomQueue<T> : IQueueCustom<T>
     {
-        public LinkedList<T> Queue { get; set; } = new LinkedList<T>();
+        private LinkedList<T> Queue { get; set; } = new LinkedList<T>();
 
 
         public T Dequeue()

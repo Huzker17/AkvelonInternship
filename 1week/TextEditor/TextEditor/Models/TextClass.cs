@@ -77,16 +77,6 @@ namespace TextEditor.Models
                 }
             }
         }
-        public List<List<char>> GetText()
-        {
-            if (this.Text == null)
-                return null;
-            List<List<char>> list = new List<List<char>>();
-            for(int i = 0 ; i < this.Text.Count; i++)
-            {
-                    list.Add(this.Text[i]);
-            }
-            return list;
-        }
+
     }
 }
