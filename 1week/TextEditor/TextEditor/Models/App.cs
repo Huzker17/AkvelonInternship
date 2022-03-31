@@ -49,6 +49,11 @@ namespace TextEditor.Models
             this.operation = _stateManager.Do(command);
             operation.Execute();
         }
+        public void CreateANewRow()
+        {
+            CreateANewRow command = new CreateANewRow(_textClass);
+            command.Execute();
+        }
 
     }
 }

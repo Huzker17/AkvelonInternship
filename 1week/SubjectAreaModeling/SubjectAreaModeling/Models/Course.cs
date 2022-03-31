@@ -9,7 +9,8 @@ namespace TrainingCenter.Models
         public int TeacherId { get; set; }
         public ITeacher? Teacher { get; set; }
         public ICollection<ILesson>? Lessons { get; set; }
-        public ICollection<IStudentAndCourses>? StudentAndCourses { get; set; }
+        public IDictionary<ICourse, IStudent>? Students { get; set; }
+        public IDictionary<IStudent, double> FinalMarks { get; set; }
 
         public void Create(int TeacherId, string Name)
         {
@@ -18,6 +19,22 @@ namespace TrainingCenter.Models
             Course course1 = new Course();
             course1.TeacherId = TeacherId;
             course1.Name = Name;
+        }
+        private double CountFinalMark(ICollection<IStudentAndLessons> marks)
+        {
+
+            double count = 0;
+            foreach (var item in marks)
+            {
+                count += (double)item.Mark;
+            }
+            count = count / marks.Count();
+            return count;
+        }
+        public void PutAFinalMark(ICollection<IStudentAndLessons> marks, IStudent student)
+        {
+            double AverageMark = this.CountFinalMark(marks);
+            this.FinalMarks.Add(student, AverageMark);
         }
     }
 }

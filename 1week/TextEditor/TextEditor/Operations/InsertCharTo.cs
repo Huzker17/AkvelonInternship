@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TextEditor.Interfaces;
+using TextEditor.Models;
 
 namespace TextEditor.Operations
 {
@@ -11,7 +12,7 @@ namespace TextEditor.Operations
     {
         
         private TextClass receiver;
-        private readonly char _incomingChar;
+        private char _incomingChar;
 
         public InsertCharTo(TextClass receiver, char IncomingChar)
         {
@@ -25,11 +26,11 @@ namespace TextEditor.Operations
         }
         public void Undo()
         {
-            receiver.Delete();
+            this._incomingChar = receiver.Delete();
         }
         public void Redo()
         {
-            receiver.InsertChar(receiver.History.Peek());
+            receiver.InsertChar(_incomingChar);
         }
     }
 }

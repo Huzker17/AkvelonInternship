@@ -4,26 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TextEditor.Interfaces;
+using TextEditor.Models;
+
 
 namespace TextEditor.Operations
 {
     public class Delete : IOperation
     {
         private TextClass _receiver;
+        private char deleted;
 
         public Delete(TextClass receiver) => _receiver = receiver;
 
         public void Execute()
         {
-            _receiver.Delete();
+            this.deleted = _receiver.Delete();
         }
         public void Undo()
         {
-            _receiver.InsertChar(_receiver.History.Peek());
+            _receiver.InsertChar(deleted);
         }
         public void Redo()
         {
-            _receiver.Delete();
+            this.deleted = _receiver.Delete();
         }
     }
 }

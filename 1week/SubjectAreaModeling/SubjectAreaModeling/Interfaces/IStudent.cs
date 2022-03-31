@@ -10,5 +10,6 @@ namespace TrainingCenter.Interfaces
     public interface IStudent
     {
         public bool TakeLesson(Lesson lesson);
+
     }
 }

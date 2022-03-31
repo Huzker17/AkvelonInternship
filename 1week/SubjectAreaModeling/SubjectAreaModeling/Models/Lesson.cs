@@ -12,7 +12,7 @@ namespace TrainingCenter.Models
         public ICourse? Course { get; set; }
         public int TeacherId { get; set; }
         public ITeacher? Teacher { get; set; }
-        public ICollection<IStudentAndLessons>? StudentAndLessons { get; set; }
+        public IDictionary<ILesson, IStudent> Students { get; set; }
         public ICollection<IStudentAndLessons>? Marks { get; set; }
 
         public void Create(Course course)

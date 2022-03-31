@@ -14,5 +14,8 @@ namespace TrainingCenter.Interfaces
         /// <param name="TeacherId">Only one teacher can handle one course</param>
         /// <param name="Name">The name of the course</param>
         public void Create(int TeacherId, string Name);
+        public void PutAFinalMark(ICollection<IStudentAndLessons> marks, IStudent student);
+
+
     }
 }

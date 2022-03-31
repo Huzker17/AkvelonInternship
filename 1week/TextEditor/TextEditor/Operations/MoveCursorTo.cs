@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TextEditor.Interfaces;
+using TextEditor.Models;
 
 namespace TextEditor.Operations
 {

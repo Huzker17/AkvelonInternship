@@ -5,30 +5,33 @@ using System.Text;
 using System.Threading.Tasks;
 using TextEditor.Interfaces;
 
-namespace TextEditor
+namespace TextEditor.Models
 {
     public class TextClass
     {
         private List<List<char>> Text { get; set; } = new List<List<char>>();
 
-        //I know that this shouldn't be like this. But  I don't have any another ideas 
-        public Stack<char> History { get; set; } = new Stack<char>();
+        private char DeletedChar;
+
         private int Row { get; set; } = 0;
         private int Column { get; set; } = 0;
 
         public void MoveCursorTo(int Row,int Column)
         {
+            if(Row < 0 || Column < 0 && Row >= Text.Count || Column >= Text.Count)
+                throw new ArgumentOutOfRangeException(nameof(Row), nameof(Column));
             this.Row = Row;
             this.Column = Column;
         }
         public void CreateNewRow()
         {
+            this.Row = this.Text.Count;
+            this.Column = 0;
             this.Text.Add(new List<char>());
         }
 
         public List<List<char>> InsertChar(char c)
         {
-            History.Push(c);
             if(Text.Count == 0)
             {
                 List<char> row = new List<char>();
@@ -45,25 +48,32 @@ namespace TextEditor
             Column++;
             return this.Text;
         }
-        public void Delete()
+        public char Delete()
         {
             if (this.Column > 0)
             {
                 Column--;
+                DeletedChar = Text[Row][Column];
                 Text[Row].Remove(Text[Row][Column]);
+                return DeletedChar;
             }
             else
             {
                 if(this.Row > 0)
                 {
                     Row--;
-                    this.Text[Row].Remove(Text[Row][Text[Row].Count]);
+                    this.Column = Text[Row].Count;
                     this.Column--;
+                    DeletedChar = this.Text[Row][Column];
+                    this.Text[Row].Remove(Text[Row][Column]);
+                    this.Text.RemoveAt((Row + 1));
+                    return DeletedChar;
                 }
                 else
                 {
                     this.Row = 0;
                     this.Column = 0;
+                    return DeletedChar;
                 }
             }
         }

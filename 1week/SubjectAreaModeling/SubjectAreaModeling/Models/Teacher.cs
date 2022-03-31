@@ -2,14 +2,13 @@
 using System.Collections.ObjectModel;
 using TrainingCenter.Interfaces;
 using TrainingCenter.Models.BaseClass;
-using TrainingCenter.Models.VirtualTables;
 
 namespace TrainingCenter.Models
 {
     public class Teacher : Person, ITeacher
     {
         public int Id { get; set; }
-        public ICollection<IStudentAndTeacher>? StudentAndTeachers { get; set; }
+        public IDictionary<ITeacher, IStudent>? Students { get; set; }
         public ICollection<ICourse> Courses { get; set; } = new Collection<ICourse>();
         public ICollection<ILesson> Lessons { get; set; } = new Collection<ILesson>();
         public void PutMark(StudentAndLesson studentAndLesson, int mark)
