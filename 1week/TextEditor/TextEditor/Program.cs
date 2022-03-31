@@ -20,6 +20,7 @@ invoker.InsertChar('R');
 invoker.InsertChar('A');
 invoker.CreateANewRow();
 invoker.Delete();
+int a = text.Column;
 
 invoker.InsertChar('M');
 invoker.InsertChar('M');

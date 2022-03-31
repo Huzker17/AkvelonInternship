@@ -54,6 +54,11 @@ namespace TextEditor.Models
             CreateANewRow command = new CreateANewRow(_textClass);
             command.Execute();
         }
+        public void GetText()
+        {
+            GetText command = new GetText(_textClass);
+            command.Execute();
+        }
 
     }
 }

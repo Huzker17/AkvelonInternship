@@ -13,12 +13,12 @@ namespace TextEditor.Models
 
         private char DeletedChar;
 
-        private int Row { get; set; } = 0;
-        private int Column { get; set; } = 0;
+        public int Row { get; private set; } = 0;
+        public int Column { get; private set; } = 0;
 
         public void MoveCursorTo(int Row,int Column)
         {
-            if(Row < 0 || Column < 0 && Row >= Text.Count || Column >= Text.Count)
+            if(Row < 0 || Column < 0 || Row >= Text.Count)
                 throw new ArgumentOutOfRangeException(nameof(Row), nameof(Column));
             this.Row = Row;
             this.Column = Column;
@@ -76,6 +76,17 @@ namespace TextEditor.Models
                     return DeletedChar;
                 }
             }
+        }
+        public List<List<char>> GetText()
+        {
+            if (this.Text == null)
+                return null;
+            List<List<char>> list = new List<List<char>>();
+            for(int i = 0 ; i < this.Text.Count; i++)
+            {
+                    list.Add(this.Text[i]);
+            }
+            return list;
         }
     }
 }
