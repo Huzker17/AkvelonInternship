@@ -22,7 +22,7 @@ namespace Delegate.Models
             this.Address = customerDto.Address;
             this.Name = customerDto.Fullname;
             this.Type = customerDto.CustomerType;
-            this.Id = this.Id = random.Next(1, 1000);
+            this.Id = this.Id = 12;
             return this.Id;
         }
         public void Update(UpdateCustomerDto updateCustomer)

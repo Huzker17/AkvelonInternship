@@ -23,6 +23,8 @@ namespace Delegate
         /// <param name="customer">Take as a param Dto with necessary fields to create a Customer</param>
         public int CreateCustomer(CustomerDto customer)
         {
+            if(customer == null)
+                throw new ArgumentNullException(nameof(customer));
             return customerService.CreateCustomer(customer);
         }
         /// <summary>
@@ -33,6 +35,8 @@ namespace Delegate
         {
             //Create this method for not create a lot of Customers for checking 
             //all options of Discount
+            if(updateCustomerDto == null)
+                throw new ArgumentNullException(nameof(updateCustomerDto));
             customerService.UpdateCustomer(updateCustomerDto);
         }
         /// <summary>
@@ -41,15 +45,19 @@ namespace Delegate
         /// <param name="order">The certain order for count discount for Customer</param>
         public double CalculateDiscount(OrderDto order)
         {
+            if(order == null)
+                throw new ArgumentNullException(nameof(order));
             return customerService.CalculateDicsount(order);
         }
         /// <summary>
         /// Creation of Order
         /// </summary>
         /// <param name="orderDto">Dto for necessary fields to create</param>
-        public void CreateOrder(OrderDto orderDto)
+        public Order CreateOrder(OrderDto orderDto)
         {
-            orderService.CreateOrder(orderDto);
+            if(orderDto == null)
+                throw new ArgumentNullException(nameof(orderDto));
+            return orderService.CreateOrder(orderDto);
         }
     }
 }

@@ -7,10 +7,13 @@ namespace Delegate.Services
 {
     public class OrderService : IOrderService
     {
-        public void CreateOrder(OrderDto orderDto)
+        public Order CreateOrder(OrderDto orderDto)
         {
+            if (orderDto == null)
+                throw new ArgumentNullException(nameof(orderDto));
             Order order1 = new Order();
             order1.Create(orderDto);
+            return order1;
         }
     }
 }
