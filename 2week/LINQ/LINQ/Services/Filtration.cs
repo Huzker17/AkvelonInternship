@@ -14,22 +14,24 @@ namespace LINQ.Services
         {
             dataseed = dataSeed;
         }
-        public void FilterByLinq()
+        public IEnumerable<string> FilterByLinq()
         {
+            if(this.dataseed == null)
+                throw new ArgumentNullException();
             var consumers = dataseed.Consumers();
             var consumersDiscounts = dataseed.ConsumerDiscounts();
             var goods = dataseed.Goods();
             var priceOfGoods = dataseed.PriceOfGoods();
             var purchases = dataseed.Purchases();
             var stores = dataseed.Stores();
-            var oldest = consumers.OrderBy(x => x.YearOfBirth).Take(1);
+
+            var oldest = consumers.OrderBy(x => x.YearOfBirth).Take(2);
             var filteredData = purchases.Where(c => oldest.Any(x => x.ConsumerCode.Equals(c.ConsumerCode)));
             var newfilterData = priceOfGoods.Where(c => filteredData.Any(x => x.ArticleNumber.Equals(c.ArticleNumber)));
             var extraNewFilterData = goods.Where(d => newfilterData.Any(x => x.ArticleNumber.Equals(d.ArticleNumber)));
-            var zip1 = oldest.Zip(newfilterData, (first, second) => first.YearOfBirth.ToShortDateString() + " " + second.StoreName +" " + second.Price);
-            var zip2 = zip1.Zip(extraNewFilterData, (first, second) => first+" "+ second.CountryOfOrigin);
-
-            var sds = "";
+            var zip1 = extraNewFilterData.Zip(newfilterData, (first, second) => first.CountryOfOrigin +" "+ second.StoreName +" "+ second.Price);
+            var zip2 = oldest.Zip(zip1, (first, second) => second + " "+first.YearOfBirth.ToShortDateString());
+            return zip2;
         }
     }
 }
