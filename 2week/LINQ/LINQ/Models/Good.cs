@@ -22,7 +22,7 @@ namespace LINQ.Models
         }
         private string CheckTheArticle(string aricleNumber)
         {
-            string pattern = @"AA00-0000";
+            string pattern = @"[^0-9a-zA-Z:,]+";
             // Create a Regex  
             Regex rg = new Regex(pattern);
             if (string.IsNullOrEmpty(aricleNumber))

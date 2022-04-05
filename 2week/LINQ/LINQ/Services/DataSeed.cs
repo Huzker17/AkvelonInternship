@@ -59,9 +59,33 @@ namespace LINQ.Services
                 new PriceOfGood("LP12-5412", "AliBaba",1000),
                 new PriceOfGood("PC42-3412", "Amazon",750),
                 new PriceOfGood("QA14-1111", "AliExpress",800),
-                new PriceOfGood("MN72-6782", "AleExpress",600),
+                new PriceOfGood("MN72-6782", "AliExpress",600),
             };
             return priceOfGoods;
+        }
+        public IEnumerable<Purchase> Purchases()
+        {
+            List<Purchase> purchases = new List<Purchase>()
+            {
+                new Purchase(1,"AA12-1212", "Amazon"),
+                new Purchase(3,"QA14-1115", "AliBaba"),
+                new Purchase(2,"OP32-1231", "AliExpress"),
+                new Purchase(1,"LP12-5412", "AliBaba"),
+                new Purchase(3,"PC42-3412", "Amazon"),
+                new Purchase(4,"QA14-1111", "AliExpress"),
+                new Purchase(5,"MN72-6782", "AliExpress"),
+            };
+            return purchases;
+        }
+        public IEnumerable<Store> Stores()
+        {
+            List<Store> stores = new List<Store>()
+            {
+                new Store("Amazon"),
+                new Store("AliBaba"),
+                new Store("AliExpress")
+            };
+            return stores;
         }
 
     }
