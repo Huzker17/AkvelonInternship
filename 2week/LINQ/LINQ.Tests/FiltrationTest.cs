@@ -1,6 +1,9 @@
+using LINQ.Models;
 using LINQ.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using FluentAssertions;
 using Xunit;
 
 namespace LINQ.Tests
@@ -13,32 +16,21 @@ namespace LINQ.Tests
             //arrange
             DataSeed DataSeed = new DataSeed();
             Filtration filtration = new Filtration(DataSeed);
-            List<string> expectedRes = new List<string>();
-            expectedRes.Add("Korea AliBaba 800 05.04.1999");
-            expectedRes.Add("USA Amazon 750 05.04.2000");
+            List<ResultModel> expectedRes = new List<ResultModel>();
+            expectedRes.Add(new ResultModel { Country = "Korea", Price = 800, Shop = "AliExpress", Year = "05.04.1999" });
+            expectedRes.Add(new ResultModel { Country = "Tailand", Price = 600, Shop = "AliExpress", Year = "05.04.1999" });
 
             //act
-            var filters = filtration.FilterByLinq();
+            var filters = filtration.FilterByLinq().ToList();
 
             //assert
             Assert.NotEmpty(filters);
             Assert.NotNull(filters);
-            Assert.Equal(expectedRes, filters);
+            Assert.Equal(expectedRes.Count(), filters.Count());
+            filters.Should().AllBeOfType(typeof(ResultModel));
+            Assert.Contains(expectedRes, x => x.Year == filters[0].Year 
+            && x.Country == filters[0].Country && x.Shop == filters[0].Shop && x.Price == filters[0].Price);
         }
-        [Fact]
-        public void FilterByLinq_SetAsAParameterAsANull_ThrowArgumentNullException()
-        {
-            //arrange
-            DataSeed DataSeed = new DataSeed();
-            Filtration filtration = new Filtration(null);
-            Action testCode = () => filtration.FilterByLinq();
 
-            //act
-            var ex = Record.Exception(testCode);
-
-            //assert
-            Assert.NotNull(ex);
-            Assert.IsType<ArgumentException>(ex);
-        }
     }
 }

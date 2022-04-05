@@ -14,7 +14,7 @@ namespace LINQ.Services
         {
             dataseed = dataSeed;
         }
-        public IEnumerable<string> FilterByLinq()
+        public IEnumerable<ResultModel> FilterByLinq()
         {
             if(this.dataseed == null)
                 throw new ArgumentNullException();
@@ -24,14 +24,42 @@ namespace LINQ.Services
             var priceOfGoods = dataseed.PriceOfGoods();
             var purchases = dataseed.Purchases();
             var stores = dataseed.Stores();
+            List<ResultModel> test = purchases.Join(consumers, purchase
+                                => purchase.ConsumerCode, consumer => consumer.ConsumerCode,
+                                (purchase, consumer) => new
+                                {
+                                    YearOfBirth = consumer.YearOfBirth,
+                                    ArticleNumber = purchase.ArticleNumber,
+                                    StoreName = purchase.StoreName,
+                                    ConsumerCode = consumer.ConsumerCode
+                                })
+                                .OrderBy(x => x.YearOfBirth).GroupBy(x => x.ConsumerCode).Take(1).
+                                SelectMany(x => x.Select(x => new 
+                                {
+                                    YearOfBirth = x.YearOfBirth,
+                                    ArticleNumber = x.ArticleNumber,
+                                    StoreName = x.StoreName,
+                                    ConsumerCode = x.ConsumerCode
+                                }))
+                                .Join(priceOfGoods, purchase => purchase.ArticleNumber, price => price.ArticleNumber,
+                                (purchase, price) => new
+                                {
+                                    storeName = purchase.StoreName,
+                                    year = purchase.YearOfBirth,
+                                    Article = purchase.ArticleNumber,
+                                    Price = price.Price,
+                                    ConsumerCode = purchase.ConsumerCode
+                                }).
+                                Join(goods, data => data.Article, good => good.ArticleNumber,
+                                (data, good) => new ResultModel
+                                {
+                                    Country = good.CountryOfOrigin,
+                                    Shop = data.storeName,
+                                    Year = data.year.ToShortDateString(),
+                                    Price = data.Price
+                                }).OrderBy(x => x.Country).ToList();
+            return test;
 
-            var oldest = consumers.OrderBy(x => x.YearOfBirth).Take(2);
-            var filteredData = purchases.Where(c => oldest.Any(x => x.ConsumerCode.Equals(c.ConsumerCode)));
-            var newfilterData = priceOfGoods.Where(c => filteredData.Any(x => x.ArticleNumber.Equals(c.ArticleNumber)));
-            var extraNewFilterData = goods.Where(d => newfilterData.Any(x => x.ArticleNumber.Equals(d.ArticleNumber)));
-            var zip1 = extraNewFilterData.Zip(newfilterData, (first, second) => first.CountryOfOrigin +" "+ second.StoreName +" "+ second.Price);
-            var zip2 = oldest.Zip(zip1, (first, second) => second + " "+first.YearOfBirth.ToShortDateString());
-            return zip2;
         }
     }
 }

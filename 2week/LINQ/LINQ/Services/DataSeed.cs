@@ -73,7 +73,7 @@ namespace LINQ.Services
                 new Purchase(1,"LP12-5412", "AliBaba"),
                 new Purchase(3,"PC42-3412", "Amazon"),
                 new Purchase(4,"QA14-1111", "AliExpress"),
-                new Purchase(5,"MN72-6782", "AliExpress"),
+                new Purchase(4,"MN72-6782", "AliExpress"),
             };
             return purchases;
         }

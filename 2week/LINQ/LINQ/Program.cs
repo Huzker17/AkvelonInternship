@@ -3,5 +3,5 @@ using LINQ.Services;
 
 Console.WriteLine("Hello, World!");
 DataSeed dataSeed = new DataSeed();
-Filtration ft = new Filtration(null);
+Filtration ft = new Filtration(dataSeed);
 ft.FilterByLinq();
