@@ -22,10 +22,13 @@ namespace LINQ.Tests
 
             //act
             var filters = filtration.FilterByLinq().ToList();
+            var equals = expectedRes.Zip(filters).All(item => item.First.Price == item.Second.Price);
+
 
             //assert
             Assert.NotEmpty(filters);
             Assert.NotNull(filters);
+            Assert.True(equals);
             Assert.Equal(expectedRes.Count(), filters.Count());
             filters.Should().AllBeOfType(typeof(ResultModel));
             Assert.Contains(expectedRes, x => x.Year == filters[0].Year 
