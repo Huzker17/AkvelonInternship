@@ -51,7 +51,6 @@
     <Compile Include="ISpecifier.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Specifier_should.cs" />
     <Compile Include="Specifier.cs" />
     <Compile Include="VkApi.cs" />
   </ItemGroup>

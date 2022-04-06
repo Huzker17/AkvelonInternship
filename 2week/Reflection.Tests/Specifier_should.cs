@@ -42,7 +42,7 @@ namespace Documentation
         {
             var actual = vkApiSpecifier.GetApiMethodNames();
             CollectionAssert.AreEquivalent(
-                new[] {authorizeMethodName, countAudioMethodName, selectAudioMethodName },
+                new[] { authorizeMethodName, countAudioMethodName, selectAudioMethodName },
                 actual);
         }
 
@@ -71,7 +71,7 @@ namespace Documentation
         public void GetApiMethodParamNames()
         {
             var description = vkApiSpecifier.GetApiMethodParamNames(authorizeMethodName);
-            CollectionAssert.AreEquivalent(new[] {"login", "password", "allowNoname"}, description);
+            CollectionAssert.AreEquivalent(new[] { "login", "password", "allowNoname" }, description);
         }
 
         [Test]
