@@ -51,12 +51,20 @@ namespace LINQ.Services
                                     ConsumerCode = purchase.ConsumerCode
                                 }).
                                 Join(goods, data => data.Article, good => good.ArticleNumber,
-                                (data, good) => new ResultModel
+                                (data, good) => new 
                                 {
+                                    ConsumerCode = data.ConsumerCode,
                                     Country = good.CountryOfOrigin,
                                     Shop = data.storeName,
                                     Year = data.year.ToShortDateString(),
                                     Price = data.Price
+                                }).Join(consumersDiscounts, resultModel => resultModel.ConsumerCode, discount => discount.ConsumerCode,
+                                (model, discount) => new ResultModel
+                                {
+                                    Country = model.Country,
+                                    Shop = model.Shop,
+                                    Year = model.Year,
+                                    Price = (model.Price * discount.Discount) / 100
                                 }).OrderBy(x => x.Country).ToList();
             return test;
 

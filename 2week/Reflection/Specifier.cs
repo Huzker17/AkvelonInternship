@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -8,12 +9,30 @@ namespace Documentation
     {
         public string GetApiDescription()
         {
-            throw new NotImplementedException();
+            var type = typeof(VkApi);
+            System.Attribute[] attrs = System.Attribute.GetCustomAttributes(type);  // Reflection.  
+            string description = null;
+            foreach (System.Attribute attr in attrs)
+            {
+                if (attr is ApiDescriptionAttribute)
+                {
+                    var a = (ApiDescriptionAttribute)attr;
+                    description = a.Description;
+                }
+            }
+            return description;
         }
 
         public string[] GetApiMethodNames()
         {
-            throw new NotImplementedException();
+            var type = typeof(VkApi);
+            var refMethods = type.GetMethods();  // Reflection.  
+            List<string> methods = new List<string>();
+            foreach (var method in refMethods)
+            {
+                methods.Add(method.Name);
+            }
+            return methods.ToArray();
         }
 
         public string GetApiMethodDescription(string methodName)
