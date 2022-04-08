@@ -8,7 +8,7 @@ namespace Task1.Models
 {
     public class DanceHall
     {
-
+        private string musicType;
         public List<Dancer> Dancers { get; private set; }
         public List<Music> Music { get; private set; }
 
@@ -20,19 +20,21 @@ namespace Task1.Models
 
         public void PlayMusicAndDance()
         {
-            var musicType = ChangeMusic();
             while (Music.Count > 0)
             {
-            Thread musicThread = new Thread(() => musicType = ChangeMusic());
+                this.musicType = PlayAMusic();
+                Console.WriteLine(musicType);
                 foreach (var dancer in Dancers)
                 {
-                    Thread thread = new Thread(() => dancer.Dance(musicType));
-                    Thread.Sleep(1000);
-                    thread.Start();
+                    dancer.Dancing(this.musicType);
                 }
-                musicThread.Start();
             }
-
+        }
+        private string PlayAMusic()
+        {
+            Thread thread = new Thread(() => this.musicType = ChangeMusic());
+            thread.Start();
+            return this.musicType;
         }
         private string ChangeMusic()
         {

@@ -10,7 +10,7 @@ namespace Task1.Models
     {
         public string? DanceType { get; private set; }
 
-        public void Dance(string musicType)
+        private void Dance(string musicType)
         {
             if(musicType == null)
                 return;
@@ -21,6 +21,11 @@ namespace Task1.Models
             if (musicType == "Rock")
                 this.DanceType = "Head for Rock";
             Console.WriteLine("Dance type: " + this.DanceType);
+        }
+        public void Dancing(string musciType)
+        {
+            Thread thread = new Thread(() => this.Dance(musciType));
+            thread.Start();
         }
     }
 }
