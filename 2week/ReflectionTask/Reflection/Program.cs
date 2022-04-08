@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Documentation
 {
@@ -9,11 +10,9 @@ namespace Documentation
             Console.WriteLine($"Documentation of {typeof(VkApi).Name}");
 
             var specifier = new Specifier<VkApi>();
-            var desc = specifier.GetApiDescription();
-            var desc2 = specifier.GetApiMethodDescription("Authorize");
-            var description = specifier.GetApiMethodDescription(Guid.NewGuid().ToString());
+            var notApiSpecifier = new Specifier<List<int>>();
+
             var methodNames = specifier.GetApiMethodNames();
-            var test = specifier.GetApiMethodParamDescription("Authorize", "allowNoname");
             foreach (var methodName in methodNames)
             {
                 WriteWithColor($"{methodName}", ConsoleColor.Yellow);

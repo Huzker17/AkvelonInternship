@@ -5,11 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using Xunit;
+using LINQ.Interfaces;
 
 namespace LINQ.Tests
 {
     public class FiltrationTest
     {
+
         [Fact]
         public void FilterByLinq_CreateAListAndGetTheListFromLinqFilter_TheBothListsShouldBeEqual()
         {
@@ -30,8 +32,35 @@ namespace LINQ.Tests
             Assert.NotNull(filters);
             Assert.True(equals);
             filters.Should().AllBeOfType(typeof(ResultModel));
-            Assert.Contains(expectedRes, x => x.Year == filters[0].Year 
-            && x.Country == filters[0].Country && x.Shop == filters[0].Shop && x.Price == filters[0].Price);
+        }
+        [Fact]
+        public void FilterByLinq_SetANullInsteadOfDataSeed_ThrowArgumentNullException()
+        {
+            //arrange
+            Filtration filtration = new Filtration(null);
+            Action result = () => filtration.FilterByLinq();
+
+            //act
+            var ex = Record.Exception(result);
+
+            //asert
+            Assert.NotNull(ex);
+            Assert.IsType<ArgumentNullException>(ex);
+        }
+
+        [Fact]
+        public void FilterByLinq_SetAsAParameterEmptyDataSeed_ReturnNull()
+        {
+            //Arrange
+            EmptyDataSeed seed = new EmptyDataSeed();
+            Filtration filtration = new Filtration(seed);
+
+            //Act
+            var result = filtration.FilterByLinq();
+            
+            //Assert
+            Assert.Null(result);
+
         }
 
     }

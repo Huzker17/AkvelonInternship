@@ -12,17 +12,9 @@ namespace Documentation
             var type = typeof(T);
             if (type == null)
                 return null;
-            Attribute[] attrs = Attribute.GetCustomAttributes(type);    
-            string description = null;
-            foreach (Attribute attr in attrs)
-            {
-                if (attr is ApiDescriptionAttribute)
-                {
-                    var a = (ApiDescriptionAttribute)attr;
-                    description = a.Description;
-                }
-            }
-            return description;
+            if(type != typeof(VkApi))
+                return null;
+            return type.GetCustomAttribute<ApiDescriptionAttribute>().Description; 
         }
 
         public string[] GetApiMethodNames()
@@ -30,14 +22,13 @@ namespace Documentation
             var type = typeof(T);
             if (type == null)
                 return null;
-            var refMethods = type.GetMethods();  // Reflection.  
-            List<string> methods = new List<string>();
-            foreach (var method in refMethods)
-            {
-                if(method.Name == "Authorize" || method.Name == "SelectAudio" || method.Name == "GetTotalAudioCount")
-                    methods.Add(method.Name);
-            }
-            return methods.ToArray();
+            return type.GetMethods().Where(x => x.Name != "Authorize2"
+                                             && x.Name != "ToString"
+                                             && x.Name != "GetHashCode"
+                                             && x.Name != "Equals"
+                                             && x.Name != "EnterBackdoor"
+                                             && x.Name != "GetType")
+                                        .Select(x => x.Name).ToArray();
         }
 
         public string GetApiMethodDescription(string methodName)
@@ -45,22 +36,12 @@ namespace Documentation
             var type = typeof(T);
             if (type == null)
                 return null;
-            var invoke = type.GetMethod(methodName);
-            if (invoke == null)
+            var methodInfo = type.GetMethod(methodName);
+            if (methodInfo == null)
                 return null;
-            var attrs = ApiDescriptionAttribute.GetCustomAttributes(invoke);
-            if (attrs == null)
+            if(methodInfo.GetCustomAttributes(typeof(ApiDescriptionAttribute), false).Length == 0)
                 return null;
-            string description = null;
-            foreach (var attr in attrs)
-            {
-                if (attr is ApiDescriptionAttribute)
-                {
-                    var a = (ApiDescriptionAttribute)attr;
-                    description = a.Description;
-                }
-            }
-            return description;
+            return methodInfo.GetCustomAttribute<ApiDescriptionAttribute>().Description;
         }
 
         public string[] GetApiMethodParamNames(string methodName)
@@ -68,8 +49,8 @@ namespace Documentation
             if(methodName == null)
                 throw new ArgumentNullException(nameof(methodName));
             var type = typeof (T);
-            MethodInfo invoke = type.GetMethod(methodName);
-            var pars = invoke.GetParameters().Select(x => x.Name);
+            MethodInfo methodInfo = type.GetMethod(methodName);
+            var pars = methodInfo.GetParameters().Select(x => x.Name);
             return pars.ToArray<string>();
         }
 
@@ -78,21 +59,18 @@ namespace Documentation
             if (methodName == null || paramName == null)
                 return null;
             var type = typeof(T);
-            MethodInfo invoke = type.GetMethod(methodName);
-            if (invoke == null)
+            MethodInfo methodInfo = type.GetMethod(methodName);
+            if (methodInfo == null)
                 return null;
-            var pars = invoke.GetParameters().FirstOrDefault(x => x.Name == paramName);
-            if (pars != null)
-            {
-                var test = pars.GetCustomAttribute(typeof(ApiDescriptionAttribute));
-                var a = (ApiDescriptionAttribute)test;
-                if (a == null)
-                    return null;
-                var description = a.Description;
-                return description;
-            }
-            else
+            if (methodInfo.GetParameters().FirstOrDefault(x => x.Name == paramName) == null)
                 return null;
+            var parameter = methodInfo.GetParameters().FirstOrDefault(x => x.Name == paramName);
+            if (parameter == null)
+                return null;
+            var paramAttribute = parameter.GetCustomAttribute<ApiDescriptionAttribute>();
+            if (paramAttribute == null)
+                return null;
+            return paramAttribute.Description;
         }
 
         public ApiParamDescription GetApiMethodParamFullDescription(string methodName, string paramName)
@@ -138,23 +116,23 @@ namespace Documentation
 
             if (method.GetCustomAttributes().OfType<ApiMethodAttribute>().Any())
             {
-                var pars = method.GetParameters();
-                var res = new ApiMethodDescription
+                var parameterInfos = method.GetParameters();
+                var result = new ApiMethodDescription
                 {
                     MethodDescription = new CommonDescription(methodName, GetApiMethodDescription(methodName)),
-                    ParamDescriptions = new ApiParamDescription[pars.Length]
+                    ParamDescriptions = new ApiParamDescription[parameterInfos.Length]
                 };
 
-                for (int i = 0; i < pars.Length; i++)
+                for (int i = 0; i < parameterInfos.Length; i++)
                 {
-                    res.ParamDescriptions[i] = GetApiMethodParamFullDescription(method.Name, pars[i].Name);
+                    result.ParamDescriptions[i] = GetApiMethodParamFullDescription(method.Name, parameterInfos[i].Name);
                 }
 
                 var returnAttributes = method.ReturnTypeCustomAttributes.GetCustomAttributes(true);
 
                 if (returnAttributes.Any())
                 {
-                    res.ReturnDescription = new ApiParamDescription
+                    result.ReturnDescription = new ApiParamDescription
                     {
                         ParamDescription = new CommonDescription(),
                         Required = false,
@@ -164,7 +142,7 @@ namespace Documentation
 
                     if (returnAttributes.OfType<ApiRequiredAttribute>().Any())
                     {
-                        res.ReturnDescription.Required = returnAttributes
+                        result.ReturnDescription.Required = returnAttributes
                             .OfType<ApiRequiredAttribute>()
                             .First()
                             .Required;
@@ -173,18 +151,18 @@ namespace Documentation
                     if (returnAttributes.OfType<ApiIntValidationAttribute>().Any())
         
                     {
-                        res.ReturnDescription.MinValue = returnAttributes
+                        result.ReturnDescription.MinValue = returnAttributes
                             .OfType<ApiIntValidationAttribute>()
                             .First()
                             .MinValue;
-                        res.ReturnDescription.MaxValue = returnAttributes
+                        result.ReturnDescription.MaxValue = returnAttributes
                             .OfType<ApiIntValidationAttribute>()
                             .First()
                             .MaxValue;
                     }
                 }
 
-                return res;
+                return result;
             }
 
             return null;

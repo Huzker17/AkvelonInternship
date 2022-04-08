@@ -1,4 +1,5 @@
-﻿using LINQ.Models;
+﻿using LINQ.Interfaces;
+using LINQ.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,12 @@ namespace LINQ.Services
 {
     public class Filtration
     {
-        private DataSeed dataseed;
-        public Filtration(DataSeed dataSeed)
+        private readonly IDataSeed dataseed;
+        public Filtration(IDataSeed dataSeed)
         {
             dataseed = dataSeed;
         }
-        public IEnumerable<ResultModel> FilterByLinq()
+        public IEnumerable<ResultModel>? FilterByLinq()
         {
             if(this.dataseed == null)
                 throw new ArgumentNullException();
@@ -24,7 +25,9 @@ namespace LINQ.Services
             var priceOfGoods = dataseed.PriceOfGoods();
             var purchases = dataseed.Purchases();
             var stores = dataseed.Stores();
-            List<ResultModel> test = purchases.Join(consumers, purchase
+            if (consumers.Count() == 0 || stores.Count() == 0 || goods.Count() == 0)
+                return null;
+            List<ResultModel> result = purchases.Join(consumers, purchase
                                 => purchase.ConsumerCode, consumer => consumer.ConsumerCode,
                                 (purchase, consumer) => new
                                 {
@@ -66,7 +69,7 @@ namespace LINQ.Services
                                     Year = model.Year,
                                     Price = (model.Price * discount.Discount) / 100
                                 }).OrderBy(x => x.Country).ToList();
-            return test;
+            return result;
 
         }
     }

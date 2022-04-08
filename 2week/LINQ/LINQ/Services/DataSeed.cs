@@ -1,4 +1,5 @@
-﻿using LINQ.Models;
+﻿using LINQ.Interfaces;
+using LINQ.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LINQ.Services
 {
-    public class DataSeed
+    public class DataSeed : IDataSeed
     {
         public IEnumerable<Consumer> Consumers()
         {

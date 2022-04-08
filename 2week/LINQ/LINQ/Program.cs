@@ -3,5 +3,6 @@ using LINQ.Services;
 
 Console.WriteLine("Hello, World!");
 DataSeed dataSeed = new DataSeed();
-Filtration ft = new Filtration(dataSeed);
-ft.FilterByLinq();
+Filtration ft = new Filtration(null);
+var result = ft.FilterByLinq();
+Thread.Sleep(1000);
