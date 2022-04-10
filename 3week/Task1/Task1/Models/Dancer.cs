@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Task1.Models
 {
-    public class Dancer
+    public class Dancer 
     {
         public string? DanceType { get; private set; }
 
-        private void Dance(string musicType)
+        public void Dance(string musicType)
         {
-            if(musicType == null)
+            if (musicType == null)
                 return;
             if (musicType == "Hardbass")
                 this.DanceType = "Elbow for Hardbass";
@@ -20,12 +20,9 @@ namespace Task1.Models
                 this.DanceType = "Hips for Latino";
             if (musicType == "Rock")
                 this.DanceType = "Head for Rock";
-            Console.WriteLine("Dance type: " + this.DanceType);
+            Console.WriteLine("Dance type: " + this.DanceType + " Thread Id : " + Thread.CurrentThread.ManagedThreadId);
         }
-        public void Dancing(string musciType)
-        {
-            Thread thread = new Thread(() => this.Dance(musciType));
-            thread.Start();
-        }
+
     }
 }
+

@@ -12,21 +12,22 @@ namespace Task1.Models
         public List<Dancer> Dancers { get; private set; }
         public List<Music> Music { get; private set; }
 
-        public DanceHall()
+        public DanceHall(List<Dancer> dancers, List<Music> musics)
         {
-            Dancers = DancersList();
-            Music = PlayList();
+            Dancers = dancers;
+            Music = musics;
         }
 
         public void PlayMusicAndDance()
         {
+            if (Music == null || Dancers == null)
+                throw new ArgumentNullException();
             while (Music.Count > 0)
             {
                 this.musicType = PlayAMusic();
-                Console.WriteLine(musicType);
                 foreach (var dancer in Dancers)
                 {
-                    dancer.Dancing(this.musicType);
+                    this.Dancing(dancer, musicType);
                 }
             }
         }
@@ -40,70 +41,20 @@ namespace Task1.Models
         {
             if (Music.Count > 0)
             {
-              var musicType = Music[(Music.Count-1)].Type;
-              Music.Remove(Music[(Music.Count - 1)]);
-                Console.WriteLine("I'm here "+ musicType +" "+ Music.Count());
-              return musicType;
-            }else
+                var musicType = Music[(Music.Count - 1)].Type;
+                Music.Remove(Music[(Music.Count - 1)]);
+                Console.WriteLine("Music type: " + musicType);
+                return musicType;
+            }
+            else
                 return null;
         }
-        private List<Dancer> DancersList()
+        private void Dancing(Dancer dancer, string musicType)
         {
-           var dancers = new List<Dancer>()
-            {
-                new Dancer(),
-                new Dancer(),
-                new Dancer(),
-                new Dancer(),
-                new Dancer(),
-                new Dancer(),
-                new Dancer(),
-                new Dancer(),
-                new Dancer(),
-                new Dancer(),
-                new Dancer(),
-                new Dancer(),
-                new Dancer(),
-                new Dancer(),
-                new Dancer(),
-                new Dancer(),
-                new Dancer(),
-                new Dancer(),
-                new Dancer(),
-            };
-            return dancers;
+            Thread thread1 = new Thread(() => dancer.Dance(musicType));
+            thread1.Start();
         }
-        private List<Music> PlayList()
-        {
-            var playList = new List<Music>()
-            {
-                new Music("Hardbass"),
-                new Music("Latino"),
-                new Music("Rock"),
-                new Music("Rock"),
-                new Music("Latino"),
-                new Music("Rock"),
-                new Music("Rock"),
-                new Music("Hardbass"),
-                new Music("Hardbass"),
-                new Music("Rock"),
-                new Music("Latino"),
-                new Music("Latino"),
-                new Music("Rock"),
-                new Music("Rock"),
-                new Music("Rock"),
-                new Music("Hardbass"),
-                new Music("Hardbass"),
-                new Music("Hardbass"),
-                new Music("Latino"),
-                new Music("Latino"),
-                new Music("Latino"),
-                new Music("Rock"),
-                new Music("Latino"),
-                new Music("Rock")
-            };
-            return playList;
-        }
-
+       
+      
     }
 }

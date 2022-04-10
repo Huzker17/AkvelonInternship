@@ -2,5 +2,8 @@
 using Task1.Models;
 
 Console.WriteLine("Hello, World!");
-DanceHall DanceHall = new DanceHall();
+DataSeed seed = new DataSeed();
+var dancers = seed.DancerList();
+var playlist = seed.PlayList();
+DanceHall DanceHall = new DanceHall(dancers.ToList(), playlist.ToList());
 DanceHall.PlayMusicAndDance();
