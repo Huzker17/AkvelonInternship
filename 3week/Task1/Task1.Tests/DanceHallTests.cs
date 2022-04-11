@@ -26,6 +26,7 @@ namespace Task1.Tests
             Assert.NotNull(danceHall.Music);
             Assert.NotEqual(dancerStyle, newStyle);
         }
+
         [Fact]
         public void PlayMusicAndDance_DancersAndPlayListAreNull_ThrowArgumentNullException()
         {
@@ -38,6 +39,7 @@ namespace Task1.Tests
             Assert.NotNull(ex);
             Assert.IsType<ArgumentNullException>(ex);
         }
+
         [Fact]
         public void PlayMusicAndDance_OneArgumentIsNull_ThrowArgumentNullException()
         {

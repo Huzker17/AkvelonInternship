@@ -22,6 +22,7 @@ namespace Task1.Models
         {
             if (Music == null || Dancers == null)
                 throw new ArgumentNullException();
+
             while (Music.Count > 0)
             {
                 this.musicType = PlayAMusic();
@@ -31,12 +32,14 @@ namespace Task1.Models
                 }
             }
         }
+
         private string PlayAMusic()
         {
             Thread thread = new Thread(() => this.musicType = ChangeMusic());
             thread.Start();
             return this.musicType;
         }
+
         private string ChangeMusic()
         {
             if (Music.Count > 0)
