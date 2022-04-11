@@ -4,7 +4,10 @@ using Delegate.Interfaces;
 
 namespace Delegate.Services
 {
+    //Delegate
     public delegate double CountDiscount(OrderDto order);
+
+
     public class CustomerService : ICustomerService
     {
         //This a field, because we don't have a DataLayer

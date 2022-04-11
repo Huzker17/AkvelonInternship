@@ -96,6 +96,7 @@ namespace Delegate.Tests
             };
             customerService.CreateCustomer(Customer);
             var updateCustomer =  new UpdateCustomerDto() { CustomerType = CustomerType.LargePermanent };
+            //Delegate
             CountDiscount discount = customerService.CalculateDicsount;
             //act
             var firstDiscount = discount(OrderDto);
@@ -107,6 +108,19 @@ namespace Delegate.Tests
         }
         [Fact]
         public void CountADiscount_SetAsAParameterNull_ThrowArgumentNullException()
+        {
+            //arrange
+            var customerService = new CustomerService();
+            CountDiscount discount = customerService.CalculateDicsount;
+            Action test = () => discount(null);
+            //act
+            var ex = Record.Exception(test);
+            //assert
+            Assert.NotNull(ex);
+            Assert.IsType<ArgumentNullException>(ex);
+        }
+        [Fact]
+        public void CountADiscountDelegate_CountADiscountForDifferentTypesOfCustomers_GetADifferentValuesOfDiscount()
         {
             //arrange
             var customerService = new CustomerService();
