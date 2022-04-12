@@ -36,38 +36,48 @@ namespace LINQ.Services
                                     ConsumerCode = consumer.ConsumerCode
                                 })
                                 .OrderBy(x => x.YearOfBirth).GroupBy(x => x.ConsumerCode).Take(1).
-                                SelectMany(x => x.Select(x => new 
+            SelectMany(x => x.Select(x => new
+            {
+                YearOfBirth = x.YearOfBirth,
+                ArticleNumber = x.ArticleNumber,
+                StoreName = x.StoreName,
+                ConsumerCode = x.ConsumerCode
+            }))
+            .Join(priceOfGoods, purchase => purchase.ArticleNumber, price => price.ArticleNumber,
+            (purchase, price) => new
+            {
+                storeName = purchase.StoreName,
+                year = purchase.YearOfBirth,
+                Article = purchase.ArticleNumber,
+                Price = price.Price,
+                ConsumerCode = purchase.ConsumerCode
+            }).
+            Join(goods, data => data.Article, good => good.ArticleNumber,
+            (data, good) => new
+            {
+                ConsumerCode = data.ConsumerCode,
+                Country = good.CountryOfOrigin,
+                Shop = data.storeName,
+                Year = data.year.ToShortDateString(),
+                Price = data.Price
+            }).Join(consumersDiscounts, resultModel => resultModel.ConsumerCode, discount => discount.ConsumerCode,
+            (model, discount) => new ResultModel
+            {
+                Country = model.Country,
+                Shop = model.Shop,
+                Year = model.Year,
+                Price = (model.Price * discount.Discount) / 100
+            }).OrderBy(x => x.Country).ToList();
+            var newresult = purchases.Join(consumers, purchase
+                                => purchase.ConsumerCode, consumer => consumer.ConsumerCode,
+                                (purchase, consumer) => new
                                 {
-                                    YearOfBirth = x.YearOfBirth,
-                                    ArticleNumber = x.ArticleNumber,
-                                    StoreName = x.StoreName,
-                                    ConsumerCode = x.ConsumerCode
-                                }))
-                                .Join(priceOfGoods, purchase => purchase.ArticleNumber, price => price.ArticleNumber,
-                                (purchase, price) => new
-                                {
-                                    storeName = purchase.StoreName,
-                                    year = purchase.YearOfBirth,
-                                    Article = purchase.ArticleNumber,
-                                    Price = price.Price,
-                                    ConsumerCode = purchase.ConsumerCode
-                                }).
-                                Join(goods, data => data.Article, good => good.ArticleNumber,
-                                (data, good) => new 
-                                {
-                                    ConsumerCode = data.ConsumerCode,
-                                    Country = good.CountryOfOrigin,
-                                    Shop = data.storeName,
-                                    Year = data.year.ToShortDateString(),
-                                    Price = data.Price
-                                }).Join(consumersDiscounts, resultModel => resultModel.ConsumerCode, discount => discount.ConsumerCode,
-                                (model, discount) => new ResultModel
-                                {
-                                    Country = model.Country,
-                                    Shop = model.Shop,
-                                    Year = model.Year,
-                                    Price = (model.Price * discount.Discount) / 100
-                                }).OrderBy(x => x.Country).ToList();
+                                    YearOfBirth = consumer.YearOfBirth,
+                                    ArticleNumber = purchase.ArticleNumber,
+                                    StoreName = purchase.StoreName,
+                                    ConsumerCode = consumer.ConsumerCode
+                                })
+                                .OrderBy(x => x.YearOfBirth)./*GroupBy(x => x.ConsumerCode).*/Take(1);
             return result;
 
         }

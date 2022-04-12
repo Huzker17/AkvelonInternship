@@ -2,5 +2,5 @@
 using Task3;
 
 Console.WriteLine("Hello, World!");
-ThreadManager ThreadManager = new ThreadManager();
-ThreadManager.Start();
+ThreadManager2 ThreadManager = new ThreadManager2();
+ThreadManager.EnterPoint();
