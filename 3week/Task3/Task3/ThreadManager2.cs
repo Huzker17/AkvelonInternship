@@ -39,11 +39,12 @@ namespace Task3
             ThreadPool.QueueUserWorkItem(new WaitCallback(WaitForAutoReset), new object[] { 6, waitHandles[1] });
             WaitHandle.WaitAll(waitHandles,10,true);
 
+            ThreadPool.QueueUserWorkItem(new WaitCallback(SetSignal), new object[] { 2, waitHandles[1] });
+            WaitHandle.WaitAll(waitHandles,10,true);
+
             ThreadPool.QueueUserWorkItem(new WaitCallback(ReceiveSignal), new object[] { 5, waitHandles[1] });
             WaitHandle.WaitAll(waitHandles,10,true);
 
-            ThreadPool.QueueUserWorkItem(new WaitCallback(SetSignal), new object[] { 2, waitHandles[1] });
-            WaitHandle.WaitAll(waitHandles,10,true);
 
             ThreadPool.QueueUserWorkItem(new WaitCallback(SetSignal), new object[] { 1, waitHandles[1] });
             WaitHandle.WaitAll(waitHandles, 10, true);
