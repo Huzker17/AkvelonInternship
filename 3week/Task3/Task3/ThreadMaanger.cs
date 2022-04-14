@@ -56,6 +56,7 @@ namespace Task3
         });
 
 
+
         public void Enter()
         {
             Console.WriteLine("Thread 1 started");
