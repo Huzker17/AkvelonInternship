@@ -7,8 +7,8 @@ using SecondTask.Models;
 //Average speed of downloading with ThreadPool is 3 minutes
 
 Console.WriteLine("Hello, World!");
-Downloader donwloader = new Downloader(null);
-donwloader.ReadAndDownload();
+Downloader donwloader = new Downloader("https://jsonplaceholder.typicode.com/photos");
+donwloader.ReadAndDownloadWithThreadPool();
 
 //Aggregator.ReadAndDownloadWithThreadPool();
 

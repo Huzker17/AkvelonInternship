@@ -15,7 +15,7 @@ namespace SecondTask.Models
 
         private void Read()
         {
-            if(path == null)
+            if (path == null)
                 throw new ArgumentNullException();
             using (WebClient wc = new())
             {
@@ -25,26 +25,14 @@ namespace SecondTask.Models
                 photos = JsonConvert.DeserializeObject<List<Photo>>(json);
             }
         }
-        private void Download()
-        {
-            if(photos == null)
-                throw new ArgumentNullException();
-            if(photos.Count == 0)
-                throw new ArgumentException();
-            foreach (var item in photos)
-            {
-                item.Download();
-            }
-        }
-
-        public void ReadAndDownload()
-        { 
-            Read();
-            Download();
-        }
+ 
+ 
         private void DownloadWithThreadPool()
         {
-            foreach(var item in photos)
+            int inWorker = 3;
+            int outWorker = 3;
+            ThreadPool.GetMaxThreads(out inWorker, out outWorker);
+            foreach (var item in photos)
             {
                 ThreadPool.QueueUserWorkItem(new WaitCallback(item.DownloadWithThreadPool));
             }
@@ -55,5 +43,6 @@ namespace SecondTask.Models
             Read();
             DownloadWithThreadPool();
         }
-}
+
+    }
 }
