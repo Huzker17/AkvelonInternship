@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Task2.Models
 {
@@ -44,7 +45,6 @@ namespace Task2.Models
             {
                 ConcurrentDictionary<int, string> tempFilesDictionary = new ConcurrentDictionary<int, string>();
 
-                #region Calculate ranges  
                 List<Range> readRanges = new List<Range>();
                 for (int chunk = 0; chunk < numberOfParallelDownloads - 1; chunk++)
                 {
@@ -92,7 +92,7 @@ namespace Task2.Models
                 foreach (var tempFile in tempFilesDictionary.OrderBy(b => b.Key))
                 {
                     byte[] tempFileBytes = File.ReadAllBytes(tempFile.Value);
-                    destinationStream.Write(tempFileBytes, 0, tempFileBytes.Length);
+                    Image ret = Image.FromStream(tempFileBytes);
                     File.Delete(tempFile.Value);
                 }
 
@@ -103,4 +103,3 @@ namespace Task2.Models
         }
     }
 }
-#endregion
