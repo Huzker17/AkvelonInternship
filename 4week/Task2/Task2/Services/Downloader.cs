@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Concurrent;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
+using System.Drawing;
 
 namespace Task2.Models
 {
@@ -16,16 +11,12 @@ namespace Task2.Models
 
             Uri uri = new Uri(fileUrl);
 
-
             string destinationFilePath = Path.Combine(destinationFolderPath, uri.Segments.Last());
-
-
 
             if (numberOfParallelDownloads <= 0)
             {
                 numberOfParallelDownloads = Environment.ProcessorCount;
             }
-
 
             WebRequest webRequest = HttpWebRequest.Create(fileUrl);
             webRequest.Method = "HEAD";
@@ -43,7 +34,7 @@ namespace Task2.Models
 
             using (FileStream destinationStream = new FileStream(destinationFilePath, FileMode.Append))
             {
-                ConcurrentDictionary<int, string> tempFilesDictionary = new ConcurrentDictionary<int, string>();
+                ConcurrentQueue<string> tempFilesDictionary2 = new ConcurrentQueue<string>();
 
                 List<Range> readRanges = new List<Range>();
                 for (int chunk = 0; chunk < numberOfParallelDownloads - 1; chunk++)
@@ -56,49 +47,45 @@ namespace Task2.Models
                     readRanges.Add(range);
                 }
 
-
                 readRanges.Add(new Range()
                 {
                     Start = readRanges.Any() ? readRanges.Last().End + 1 : 0,
                     End = responseLength - 1
                 });
 
-
                 DateTime startTime = DateTime.Now;
 
-
-                int index = 0;
-                Parallel.ForEach(readRanges, new ParallelOptions() { MaxDegreeOfParallelism = numberOfParallelDownloads }, readRange =>
+                Parallel.ForEach(readRanges, new ParallelOptions() { MaxDegreeOfParallelism = numberOfParallelDownloads },
+                    readRange =>
                 {
                     HttpWebRequest httpWebRequest = HttpWebRequest.Create(fileUrl) as HttpWebRequest;
                     httpWebRequest.Method = "GET";
                     httpWebRequest.AddRange(readRange.Start, readRange.End);
                     using (HttpWebResponse httpWebResponse = httpWebRequest.GetResponse() as HttpWebResponse)
                     {
-                        String tempFilePath = Path.GetTempFileName();
+                        string tempFilePath = Path.GetTempFileName();
                         using (var fileStream = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write, FileShare.Write))
                         {
                             httpWebResponse.GetResponseStream().CopyTo(fileStream);
-                            tempFilesDictionary.TryAdd((int)index, tempFilePath);
+                            tempFilesDictionary2.Enqueue(tempFilePath);
                         }
                     }
-                    index++;
-
                 });
 
-                ResultModel result = new ResultModel(destinationFilePath, responseLength, DateTime.Now.Subtract(startTime), index);
-
-
-                foreach (var tempFile in tempFilesDictionary.OrderBy(b => b.Key))
+                ResultModel result = new ResultModel(destinationFilePath, responseLength, DateTime.Now.Subtract(startTime), readRanges.Count);
+                foreach (var tempFile in tempFilesDictionary2)
                 {
-                    byte[] tempFileBytes = File.ReadAllBytes(tempFile.Value);
-                    Image ret = Image.FromStream(tempFileBytes);
-                    File.Delete(tempFile.Value);
+                    byte[] tempFileBytes = File.ReadAllBytes(tempFile);
+                    using (var ms = new MemoryStream(tempFileBytes))
+                    {
+                        ms.WriteTo(destinationStream);
+                        File.Delete(tempFile);
+                    }
                 }
+                
 
                 return result;
             }
-
 
         }
     }
