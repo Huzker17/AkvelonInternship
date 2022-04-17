@@ -12,7 +12,7 @@ namespace SecondTask.Tests
             //Arrange
             Downloader donwloader = new Downloader("https://jsonplaceholder.typicode.com/photos");
             var expectedResult = 5000;
-            donwloader.ReadAndDownload();
+            donwloader.ReadAndDownloadWithThreadPool();
 
             //Act
             var length = donwloader.photos.Count;
@@ -26,13 +26,13 @@ namespace SecondTask.Tests
         {
             //Arrange
             Downloader downloader = new Downloader(null);
-            Action test = () => downloader.ReadAndDownload();
+            Action test = () => downloader.ReadAndDownloadWithThreadPool();
 
             //Act
             var result = Record.Exception(() => test());
 
             //Assert
-            Assert.Throws<ArgumentNullException>(() => downloader.ReadAndDownload());
+            Assert.Throws<ArgumentNullException>(() => downloader.ReadAndDownloadWithThreadPool());
         }
     }
 }
