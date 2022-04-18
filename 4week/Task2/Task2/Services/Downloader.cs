@@ -64,8 +64,9 @@ namespace Task2.Models
 
                 for (int i = 0; i < readRanges.Count; i++)
                 {
-                    Parallel.Invoke(async () => MyMethod(tempFilesDictionary, readRanges[i]));
+                    Parallel.Invoke(() => ParallelDownloader(tempFilesDictionary, readRanges[i]));
                 }
+
                 using (var progress = new ProgressBar())
                 {
                     for (int j = 0; j <= 100; j++)
@@ -92,7 +93,7 @@ namespace Task2.Models
 
         }
 
-        private async Task MyMethod(ConcurrentQueue<string> parts, Range range)
+        private async Task ParallelDownloader(ConcurrentQueue<string> parts, Range range)
         {
             HttpWebRequest httpWebRequest = HttpWebRequest.Create(fireUrl) as HttpWebRequest;
             httpWebRequest.Method = "GET";
@@ -103,7 +104,7 @@ namespace Task2.Models
             {
                 httpWebResponse.GetResponseStream().CopyTo(fileStream);
             }
-            using (fileStream)
+            await using (fileStream)
             {
                 parts.Enqueue(tempFilePath);
             }
