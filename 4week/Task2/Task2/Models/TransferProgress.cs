@@ -53,7 +53,6 @@ namespace Task2.Models
 					animation[animationIndex++ % animation.Length]);
 				UpdateText(text);
 
-
 				ResetTimer();
 			}
 		}

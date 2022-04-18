@@ -4,7 +4,7 @@ using Task2.Models;
 string destinationFolder = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\Files";
 Downloader downloader = new Downloader();
 
-var result = downloader.Download("https://images.wallpaperscraft.ru/image/single/voda_kamni_derevya_275133_1920x1080.jpg", destinationFolder, 14);
+var result = downloader.Download("https://via.placeholder.com/600/56a8c2", destinationFolder, 5);
 
 Console.WriteLine($"Location: {result.FilePath}");
 Console.WriteLine($"Size: {result.Size}bytes");

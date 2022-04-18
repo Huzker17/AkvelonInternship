@@ -8,6 +8,7 @@ namespace Task2.Models
 {
     internal class Range
     {
+        public int IndexOfChunk { get; internal set; }
         public long Start { get; internal set; }
         public long End { get; internal set; }
     }
