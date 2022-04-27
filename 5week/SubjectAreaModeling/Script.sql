@@ -1,9 +1,7 @@
 create database SubjectAreaModeling;
 
-use master;
 use SubjectAreaModeling;
 
-drop database SubjectAreaModeling;
 
 create table Students
 (
