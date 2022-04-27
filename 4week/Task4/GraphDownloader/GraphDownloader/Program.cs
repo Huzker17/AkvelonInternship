@@ -27,16 +27,10 @@ public static class Program
 
     static async Task Main(string[] args)
     {
-        //Follow these steps to create a GitHub Access Token
-        // https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/#creating-a-token
-        //Select the following permissions for your GitHub Access Token:
-        // - repo:status
-        // - public_repo
-        // Replace the 3rd parameter to the following code with your GitHub access token.
         GraphsDownloader downloader = new GraphsDownloader();
         var key = downloader.GetEnvVariable("GitHubKey",
         "You must store your GitHub key in the 'GitHubKey' environment variable",
-        "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");
+        "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");
 
         var client = new GitHubClient(new Octokit.ProductHeaderValue("IssueQueryDemo"))
         {
@@ -52,9 +46,9 @@ public static class Program
 
         try
         {
-            var results = downloader.RunPagedQueryAsync(client, PagedIssueQuery, "docs",
+            var result = downloader.RunPagedQueryAsync(client, PagedIssueQuery, "docs",
                 cancellationSource.Token, progressReporter);
-            await foreach (var issue in results)
+            await foreach (var issue in result)
                 Console.WriteLine(issue);
         }
         catch (OperationCanceledException)
@@ -63,8 +57,5 @@ public static class Program
         }
         // </SnippetEnumerateOldStyle>
     }
-    // </SnippetStarterAppMain>
 
-    // <SnippetRunPagedQuery>
- 
 }

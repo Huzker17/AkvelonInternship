@@ -99,7 +99,6 @@ namespace Task2.Models
                     }
                 }
 
-
                 return result;
             }
         }

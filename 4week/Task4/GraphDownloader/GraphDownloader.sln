@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphDownloader", "GraphDownloader\GraphDownloader.csproj", "{B6405E20-7490-4DE3-9C64-B8B997C36161}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphDownloader", "GraphDownloader\GraphDownloader.csproj", "{B6405E20-7490-4DE3-9C64-B8B997C36161}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphDownloader.Tests", "GraphDownloader.Tests\GraphDownloader.Tests.csproj", "{4A52582B-51DD-4FCB-9DDA-0EDEB90FE3DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{B6405E20-7490-4DE3-9C64-B8B997C36161}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6405E20-7490-4DE3-9C64-B8B997C36161}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6405E20-7490-4DE3-9C64-B8B997C36161}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A52582B-51DD-4FCB-9DDA-0EDEB90FE3DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A52582B-51DD-4FCB-9DDA-0EDEB90FE3DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A52582B-51DD-4FCB-9DDA-0EDEB90FE3DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A52582B-51DD-4FCB-9DDA-0EDEB90FE3DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
