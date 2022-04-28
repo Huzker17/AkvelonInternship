@@ -9,10 +9,13 @@ namespace Task2.Models
 
         public ResultModel Download(string fileUrl, string destinationFolder, int numberOfParallelism = 0)
         {
-
+            if(fileUrl == null)
+                throw new ArgumentNullException();
             Uri uri = new Uri(fileUrl);
 
-            string destinationFilePath = Path.Combine(destinationFolder, (uri.Segments.Last() + ".png"));
+            if (destinationFolder == null)
+                throw new ArgumentNullException();
+            string destinationFilePath = Path.Combine(destinationFolder, uri.Segments.Last());
 
             if (numberOfParallelism <= 0)
             {
