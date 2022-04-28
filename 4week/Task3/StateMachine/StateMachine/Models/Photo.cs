@@ -65,12 +65,14 @@ namespace StateMachine.Models
         //        }
         //        catch (Exception exception)
         //        {
+        //                Меняем state на -2, потому что словили Exception
         //                <> 1__state = -2;
         //                < uri > 5__1 = null;
         //                < myWebClient > 5__2 = null;
         //                <> t__builder.SetException(exception);
         //            return;
         //        }
+        //            
         //            <> 1__state = -2;
         //            < uri > 5__1 = null;
         //            < myWebClient > 5__2 = null;
@@ -91,31 +93,42 @@ namespace StateMachine.Models
         //        this.SetStateMachine(stateMachine);
         //    }
         //}
-        public async Task Download(string fileUrl)
+        public async Task Download(string fileUrl, WebClient webClient)
         {
             try
             {
-                using (WebClient webClient = new WebClient())
+                if (webClient == null)
+                    throw new ArgumentNullException();
+                using (webClient)
                 {
-                    await webClient.DownloadFileTaskAsync(new Uri(fileUrl), new Uri(fileUrl).Segments.Last() + ".png");
+                    webClient.DownloadFileTaskAsync(new Uri(fileUrl), new Uri(fileUrl).Segments.Last() + ".png").Wait();
+                    Console.WriteLine("The image is downloading");
                 }
             }
-            catch (Exception ex)
+            catch (AggregateException ex)
             {
-                Console.WriteLine("Failed to download File" + ex.Message );
+                foreach (Exception ex2 in ex.Flatten().InnerExceptions)
+                {
+                    Console.WriteLine(ex2.Message);
+                }
             }
         }
 
     //[AsyncStateMachine(typeof(< Download > d__0))]
     //[DebuggerStepThrough]
+    // Наш асихнронный метод разворачивается в такой вот метод без Async
     //public Task Download(string fireUrl)
     //{
     //        < Download > d__0 stateMachine = new < Download > d__0();
+    //   Создание AsyncMethodBuilder
     //    stateMachine.<> t__builder = AsyncTaskMethodBuilder.Create();
     //    stateMachine.<> 4__this = this;
     //    stateMachine.fireUrl = fireUrl;
+    //    Инициализация state у stateMachine
     //    stateMachine.<> 1__state = -1;
+    //    Начало работы AsyncMethodBuilder с состоянием данного метода
     //    stateMachine.<> t__builder.Start(ref stateMachine);
+    //    Как ответ мы возвращаем Task
     //    return stateMachine.<> t__builder.Task;
     //}
 
